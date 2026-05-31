@@ -1,402 +1,177 @@
-# README.md — Apresentação Geral
+# Aplicações de Mineração de Dados na Predição de Riscos
 
-# Trabalhos de Mineração de Dados
+## Sobre o projeto
 
-Este repositório reúne os trabalhos desenvolvidos na disciplina de Temática em Mineração de Dados. Cada pasta representa uma base analisada, com seu respectivo relatório, metodologia, métricas utilizadas, resultados obtidos e conclusão.
+Este repositório reúne os trabalhos desenvolvidos na disciplina de **Temática em Mineração de Dados**.
+
+As análises foram aplicadas em diferentes áreas, como crédito, saúde, toxicologia e comportamento, utilizando técnicas de mineração de dados e aprendizado de máquina para identificar padrões, prever riscos e comparar modelos.
 
 ## Objetivo geral
 
-Aplicar técnicas de mineração de dados e aprendizado de máquina em diferentes bases, comparando modelos, avaliando métricas e interpretando os resultados de forma prática.
+O objetivo geral foi aplicar técnicas de mineração de dados em bases reais, avaliando os resultados por meio de métricas adequadas e interpretando os modelos de forma prática.
+
+A apresentação não tem foco em código, mas sim em:
+
+- objetivo de cada base;
+- metodologia aplicada;
+- métricas utilizadas;
+- principais resultados;
+- interpretação dos resultados;
+- comparação entre os trabalhos.
+
+## Trabalhos analisados
+
+| Nº | Trabalho | Área | Objetivo |
+|---|---|---|---|
+| 1 | Cartão de Crédito | Finanças | Prever inadimplência |
+| 2 | InterDIA | Toxicologia | Prever risco de autoimunidade induzida por fármacos |
+| 3 | Drug Consumption | Comportamento | Prever risco de consumo de drogas |
+| 4 | Gallstone Disease Prediction | Saúde | Prever presença de cálculo biliar |
+| 5 | ILPD | Saúde | Prever doença hepática |
+
+## Metodologia geral
+
+Apesar de cada base ter características próprias, os trabalhos seguiram uma estrutura semelhante:
+
+1. escolha e carregamento da base de dados;
+2. análise inicial dos dados;
+3. tratamento de dados ausentes ou inconsistentes;
+4. separação entre treino e teste;
+5. tratamento de desbalanceamento, quando necessário;
+6. treinamento de modelos de classificação;
+7. avaliação por métricas;
+8. comparação dos resultados;
+9. interpretação final.
+
+## Métricas utilizadas
+
+As principais métricas utilizadas nos trabalhos foram:
+
+| Métrica | Significado |
+|---|---|
+| Acurácia | Percentual geral de acertos |
+| Sensitividade | Capacidade de identificar corretamente os casos positivos |
+| Especificidade | Capacidade de identificar corretamente os casos negativos |
+| Precisão | Proporção de previsões positivas corretas |
+| F1-score | Equilíbrio entre precisão e sensitividade |
+| AUC | Capacidade geral do modelo de separar as classes |
+| Matriz de confusão | Mostra os acertos e erros por classe |
+| MCC | Métrica útil para bases desbalanceadas |
+
+A acurácia não foi usada como única métrica, porque algumas bases eram desbalanceadas. Nesses casos, métricas como sensitividade, especificidade, F1-score e AUC foram mais importantes para avaliar o desempenho real dos modelos.
+
+## Resumo dos resultados
+
+| Trabalho | Principal técnica/modelo | Principal resultado |
+|---|---|---|
+| Cartão de Crédito | Random Forest, RFE, SMOTE e ajuste de limiar | AUC de 0,753 e aumento da sensitividade com limiar 0,38 |
+| InterDIA | EasyEnsemble Screening | AUC de 0,897 e sensitividade de 0,900 |
+| Drug Consumption | Modelos específicos por droga | Melhor equilíbrio entre sensitividade e especificidade |
+| Gallstone | Seleção de variáveis e comparação de painéis | Painel recomendado pruned_top_11 |
+| ILPD | Regressão Logística e Random Forest | Melhor desempenho variou conforme o cenário analisado |
 
 ## Organização do repositório
 
-- 01-cartao-credito/
-- 02-interdia/
-- 03-drug-consumption/
-- 04-gallstone/
-- 05-ilpd/
+Cada pasta contém os arquivos relacionados a uma base específica:
 
-Cada pasta contém:
+- `README.md`: explicação resumida do trabalho;
+- `relatorio.pdf`: relatório completo;
+- `codigo.R` ou script equivalente: código usado na análise;
+- gráficos ou resultados auxiliares, quando houver.
 
-- README explicativo da base;
-- relatório final;
-- código utilizado na análise;
-- gráficos e resultados, quando necessário.
+## Bases analisadas
 
-## Como será apresentada a análise
+### 01 — Cartão de Crédito
 
-A apresentação seguirá a seguinte ordem:
+O trabalho teve como objetivo prever inadimplência de clientes de cartão de crédito.
 
-1. Explicação geral do repositório e da proposta da disciplina.
-2. Apresentação individual de cada base.
-3. Comparação entre os trabalhos.
-4. Conclusão geral.
+Foram utilizadas técnicas como Random Forest, RFE, SMOTE e ajuste de limiar. O principal resultado foi a AUC de 0,753, com melhora na sensitividade ao ajustar o limiar de decisão.
 
-## Estrutura usada em cada trabalho
+[Acessar análise de Cartão de Crédito](./01-cartao-credito/)
 
-Em cada base, seguimos uma estrutura parecida:
+### 02 — InterDIA
 
-1. Problema analisado;
-2. Descrição da base;
-3. Tratamento dos dados;
-4. Modelos testados;
-5. Métricas utilizadas;
-6. Resultados principais;
-7. Conclusão.
+O trabalho teve como objetivo prever risco de autoimunidade induzida por fármacos a partir de descritores moleculares.
+
+O modelo principal foi o EasyEnsemble Screening, que apresentou bom desempenho em uma base desbalanceada, com AUC de 0,897 e sensitividade de 0,900.
+
+[Acessar análise InterDIA](./02-interdia/)
+
+### 03 — Drug Consumption
+
+O trabalho teve como objetivo prever usuários e não usuários para diferentes substâncias.
+
+A estratégia foi testar modelos específicos por droga, tratando o desbalanceamento e ajustando limiares conforme a necessidade de cada substância.
+
+[Acessar análise Drug Consumption](./03-drug-consumption/)
+
+### 04 — Gallstone Disease Prediction
+
+O trabalho teve como objetivo prever presença de cálculo biliar.
+
+O diferencial foi comparar diferentes painéis de variáveis, considerando desempenho, custo de coleta e redundância. O painel recomendado foi o `pruned_top_11`.
+
+[Acessar análise Gallstone](./04-gallstone/)
+
+### 05 — ILPD
+
+O trabalho teve como objetivo prever doença hepática usando dados demográficos e bioquímicos.
+
+A análise comparou modelos na base completa e também separou os cenários por gênero. O melhor modelo variou conforme o cenário analisado.
+
+[Acessar análise ILPD](./05-ilpd/)
+
+## Comparação geral
+
+| Critério | Cartão | InterDIA | Drogas | Gallstone | ILPD |
+|---|---|---|---|---|---|
+| Área | Crédito | Toxicologia | Comportamento | Saúde | Saúde |
+| Tipo de problema | Classificação | Classificação | Classificação | Classificação | Classificação |
+| Base desbalanceada | Sim | Sim | Sim | Parcialmente | Sim |
+| Foco principal | Inadimplência | Risco autoimune | Consumo | Cálculo biliar | Doença hepática |
+| Métrica importante | Sensitividade | Sensitividade e AUC | Sensitividade e especificidade | AUC e F1-score | F1-score e AUC |
+
+## Principais aprendizados
+
+Os trabalhos mostraram que a escolha do melhor modelo depende do contexto da base e do objetivo da análise.
+
+Em bases desbalanceadas, a acurácia pode ser enganosa. Por isso, foi necessário avaliar outras métricas, principalmente sensitividade, especificidade, F1-score e AUC.
+
+Também foi possível observar que modelos mais complexos nem sempre são automaticamente melhores. Em alguns casos, o mais importante foi ajustar o limiar, tratar o desbalanceamento ou escolher melhor as variáveis.
+
+## Divisão da apresentação
+
+### Parte 1
+
+Responsável por apresentar:
+
+- objetivo geral;
+- organização do repositório;
+- metodologia comum;
+- métricas utilizadas;
+- análise de Cartão de Crédito.
+
+### Parte 2
+
+Responsável por apresentar:
+
+- análise InterDIA;
+- análise Drug Consumption;
+- principais desafios das bases desbalanceadas.
+
+### Parte 3
+
+Responsável por apresentar:
+
+- análise Gallstone;
+- análise ILPD;
+- comparação geral;
+- conclusão.
 
 ## Conclusão geral
 
-Os trabalhos mostram que a escolha de um modelo não deve ser feita apenas pela acurácia. Em bases desbalanceadas ou ligadas à saúde e risco, métricas como sensitividade, especificidade, F1-score, AUC e matriz de confusão são essenciais para avaliar se o modelo realmente é útil na prática.
+A mineração de dados pode ser aplicada em diferentes áreas para apoiar decisões, prever riscos e identificar padrões.
 
+Os trabalhos mostraram que não basta treinar um modelo e olhar apenas para a acurácia. É necessário entender o problema, avaliar as métricas corretas e interpretar os resultados conforme o contexto da base.
 
-
-# 01-cartao-credito/README.md
-
-# Análise de Inadimplência em Cartão de Crédito
-
-## Objetivo
-
-O objetivo deste trabalho foi prever a inadimplência de clientes de cartão de crédito utilizando técnicas de mineração de dados e aprendizado de máquina.
-
-A análise buscou melhorar um artigo de referência que utilizava Random Forest com Recursive Feature Elimination, aplicando novas estratégias de preparação, balanceamento e ajuste do modelo.
-
-## Base de dados
-
-A base utilizada foi a Default of Credit Card Clients, disponível no UCI Machine Learning Repository. Ela contém informações de clientes de cartão de crédito de Taiwan, com variáveis relacionadas a limite de crédito, histórico de pagamento, valores de fatura e pagamentos realizados.
-
-A variável-alvo indica se o cliente se tornou inadimplente no mês seguinte.
-
-## Metodologia
-
-As principais etapas realizadas foram:
-
-- carregamento da base;
-- remoção da coluna de identificação;
-- tratamento de categorias inconsistentes;
-- conversão das variáveis categóricas;
-- separação entre treino e teste;
-- criação de novas variáveis;
-- seleção de atributos com RFE;
-- treinamento com Random Forest;
-- balanceamento da classe minoritária com SMOTE;
-- ajuste do limiar de decisão.
-
-## Melhorias aplicadas
-
-Foram criadas três variáveis principais:
-
-- SOMA_ATRASOS: representa o histórico acumulado de atrasos;
-- USO_LIMITE_ATUAL: indica o quanto do limite de crédito foi utilizado;
-- RAZAO_PAGAMENTO_ATUAL: mostra a proporção da fatura que foi paga.
-
-Além disso, foi aplicado SMOTE para lidar com o desbalanceamento da base e o número de árvores do Random Forest foi aumentado para tornar o modelo mais estável.
-
-## Métricas utilizadas
-
-As principais métricas avaliadas foram:
-
-- acurácia;
-- sensitividade;
-- especificidade;
-- AUC;
-- comparação entre diferentes limiares.
-
-## Resultados principais
-
-O modelo manteve AUC de 0,753. O ponto mais importante foi o ajuste do limiar de decisão.
-
-Com limiar padrão de 0,50, a sensitividade foi de 37,53%. Com o limiar ajustado para 0,38, a sensitividade subiu para 45,21%, mantendo especificidade acima de 90%.
-
-Isso é relevante porque, em risco de crédito, identificar possíveis devedores é mais importante do que apenas manter uma acurácia geral alta.
-
-## Conclusão
-
-A análise mostrou que o modelo ficou mais útil para aplicação prática ao priorizar a detecção de clientes inadimplentes. Mesmo sem aumentar a AUC, o ajuste de limiar tornou o modelo mais adequado para o problema real de crédito.
-
-
-
-# 02-interdia/README.md
-
-# InterDIA — Previsão de Autoimunidade Induzida por Fármacos
-
-## Objetivo
-
-O objetivo deste trabalho foi prever se compostos químicos apresentam sinais compatíveis com risco de induzir respostas autoimunes.
-
-A proposta foi reproduzir o desenho científico do artigo de referência, mas criando uma versão mais simples de executar, transparente e reprodutível em R.
-
-## Base de dados
-
-A base foi obtida do UCI Machine Learning Repository. Ela contém descritores moleculares dos compostos e uma variável-alvo indicando risco positivo ou negativo para autoimunidade induzida por fármacos.
-
-O conjunto de teste externo foi preservado apenas para avaliação final, evitando vazamento de dados.
-
-## Metodologia
-
-As principais etapas foram:
-
-- uso da base oficial;
-- manutenção do mesmo conjunto treino-teste externo do artigo;
-- reutilização do subconjunto de 65 descritores publicados;
-- treinamento de modelos supervisionados;
-- avaliação com foco em base desbalanceada;
-- escolha de limiar priorizando sensitividade;
-- análise dos descritores mais importantes.
-
-## Problema do desbalanceamento
-
-A base possui menos compostos positivos do que negativos. Por isso, a acurácia sozinha não é suficiente.
-
-Como o problema envolve risco em desenvolvimento de medicamentos, a análise priorizou evitar que compostos perigosos fossem classificados como seguros.
-
-## Métricas utilizadas
-
-Foram avaliadas métricas como:
-
-- acurácia;
-- sensitividade;
-- especificidade;
-- MCC;
-- AUC;
-- matriz de confusão.
-
-## Modelo principal
-
-O modelo principal utilizado foi o EasyEnsemble Screening, escolhido por ser mais adequado para triagem em base desbalanceada.
-
-A ideia foi priorizar uma análise segura, evitando deixar passar compostos potencialmente problemáticos.
-
-## Resultados e interpretação
-
-A análise destacou descritores importantes como Ipc, Chi0, SlogP_VSA5, EState_VSA1, HallKierAlpha, RingCount, BalabanJ e Kappa3.
-
-Esses atributos ajudam a explicar quais características químicas contribuíram mais para a separação entre compostos positivos e negativos.
-
-## Conclusão
-
-A análise foi considerada forte porque não entregou apenas um número de desempenho, mas um fluxo completo: base oficial, avaliação justa, reprodutibilidade, interpretação dos atributos e justificativa científica.
-
-Para apresentação, o ponto principal é mostrar que a escolha das métricas foi guiada pelo contexto do problema, e não apenas pela busca de maior acurácia.
-
-
-
-# 03-drug-consumption/README.md
-
-# Drug Consumption — Análise de Consumo de Drogas
-
-## Objetivo
-
-O objetivo deste trabalho foi analisar a base Drug Consumption e construir modelos capazes de classificar usuários e não usuários para diferentes substâncias.
-
-A proposta foi superar o artigo de referência no maior número possível de métricas e drogas, utilizando uma estratégia mais flexível por substância.
-
-## Base de dados
-
-A base utilizada foi a UCI Drug Consumption. Ela contém informações dos respondentes e classes relacionadas ao consumo de diferentes drogas.
-
-A classificação foi organizada da seguinte forma:
-
-- CL0 e CL1: Não usuário;
-- CL2 a CL6: Usuário.
-
-Respondentes que declararam uso de Semeron, uma droga fictícia usada para detectar respostas falsas, foram removidos da base.
-
-## Metodologia
-
-As principais etapas foram:
-
-- limpeza da base;
-- remoção de respostas inconsistentes;
-- separação entre treino e teste;
-- criação de modelos por droga;
-- comparação entre diferentes famílias de modelos;
-- tratamento de desbalanceamento;
-- ajuste de limiar por droga;
-- avaliação por métricas principais e adicionais.
-
-## Estratégia aplicada
-
-Diferente de uma abordagem única com Random Forest, este trabalho testou diferentes modelos para cada droga, como:
-
-- Random Forest;
-- regressão logística penalizada;
-- C5.0;
-- modelos com pesos de classe;
-- SMOTE;
-- ADASYN;
-- ensembles simples.
-
-A escolha foi feita de acordo com a dificuldade e o desbalanceamento de cada droga.
-
-## Métricas utilizadas
-
-As principais métricas foram:
-
-- acurácia;
-- sensitividade;
-- especificidade;
-- F1-score;
-- ROC AUC;
-- PR AUC;
-- acurácia balanceada.
-
-## Resultados principais
-
-A análise proposta apresentou melhor equilíbrio entre sensitividade e especificidade em relação ao baseline simples.
-
-A média geral da análise ficou mais adequada para comparação prática porque não olhou apenas para acurácia, mas também para o equilíbrio entre acertos nas duas classes.
-
-## Conclusão
-
-A análise mostrou que tratar cada droga individualmente é mais adequado do que aplicar um único modelo fixo para todas.
-
-O principal ganho foi metodológico: testar múltiplos modelos, lidar melhor com desbalanceamento e ajustar limiares conforme o objetivo da classificação.
-
-
-
-# 04-gallstone/README.md
-
-# Gallstone Disease Prediction
-
-## Objetivo
-
-O objetivo deste trabalho foi analisar a base Gallstone Disease Prediction e investigar se um painel fixo de 10 variáveis realmente era necessário para prever presença de cálculo biliar.
-
-A análise buscou equilibrar desempenho estatístico, custo de coleta das variáveis e plausibilidade clínica.
-
-## Base de dados
-
-A base utilizada foi a Gallstone Disease Prediction, disponível no UCI Machine Learning Repository.
-
-Ela possui informações clínicas, laboratoriais e de composição corporal relacionadas à presença ou ausência de cálculo biliar.
-
-A variável-alvo indica a presença de cálculo biliar.
-
-## Metodologia
-
-As principais etapas realizadas foram:
-
-- análise exploratória;
-- avaliação da distribuição da variável-alvo;
-- análise por gênero;
-- estudo de correlação entre variáveis;
-- identificação de redundância;
-- criação de painéis candidatos;
-- comparação entre painéis completos, painéis brutos e painéis podados;
-- validação cruzada;
-- comparação entre modelos.
-
-## Seleção de variáveis
-
-Foram comparados diferentes painéis:
-
-- full_38: todas as variáveis;
-- raw_top_k: variáveis ranqueadas por importância;
-- pruned_top_k: variáveis selecionadas após remover redundância forte.
-
-A análise não considerou apenas desempenho. Também avaliou o custo operacional de coletar cada grupo de variáveis.
-
-## Painel recomendado
-
-O painel recomendado foi o pruned_top_11, com 11 variáveis.
-
-Esse painel apresentou melhor equilíbrio entre desempenho médio, estabilidade e custo-benefício do que assumir um corte fixo universal de 10 variáveis.
-
-## Métricas utilizadas
-
-Foram avaliadas:
-
-- acurácia;
-- sensitividade;
-- especificidade;
-- precisão;
-- F1-score;
-- AUC;
-- validação cruzada.
-
-## Conclusão
-
-O painel com 11 variáveis foi considerado mais adequado porque manteve bom desempenho e reduziu redundância.
-
-A principal conclusão é que mais variáveis nem sempre significam melhor modelo. Em problemas reais, um painel menor, estável e com menor custo pode ser mais útil do que um conjunto grande de atributos.
-
-
-
-# 05-ilpd/README.md
-
-# ILPD — Indian Liver Patient Dataset
-
-## Objetivo
-
-O objetivo deste trabalho foi analisar a base Indian Liver Patient Dataset e comparar modelos de classificação para prever se um paciente possui ou não doença hepática.
-
-A análise considerou a base completa e também separações por gênero, avaliando diferenças de desempenho entre os cenários.
-
-## Base de dados
-
-A base ILPD contém informações clínicas e laboratoriais de pacientes, incluindo variáveis relacionadas à função hepática.
-
-A variável-alvo indica se o paciente pertence ao grupo doente ou saudável.
-
-## Metodologia
-
-As principais etapas foram:
-
-- carregamento da base;
-- renomeação das colunas;
-- conversão da variável Gender;
-- conversão da variável-alvo para Doente e Saudável;
-- verificação de valores ausentes;
-- separação estratificada entre treino e teste;
-- validação cruzada estratificada com 10 folds;
-- tratamento do desbalanceamento com upsampling;
-- imputação por mediana;
-- padronização das variáveis;
-- avaliação final no conjunto de teste.
-
-## Modelos testados
-
-Foram avaliados diferentes modelos supervisionados:
-
-- Regressão Logística;
-- Random Forest;
-- SVM com kernel radial;
-- Naive Bayes;
-- outros modelos comparativos.
-
-## Cenários analisados
-
-A análise foi feita em três cenários:
-
-1. Base completa;
-2. Apenas pacientes homens;
-3. Apenas pacientes mulheres.
-
-Essa separação permitiu verificar se o desempenho dos modelos mudava conforme o grupo analisado.
-
-## Métricas utilizadas
-
-Foram utilizadas:
-
-- acurácia;
-- sensitividade;
-- especificidade;
-- precisão;
-- recall;
-- F1-score;
-- AUC;
-- score geral.
-
-## Resultados principais
-
-Na base completa, o melhor modelo pelo critério composto foi a Regressão Logística.
-
-No cenário de pacientes homens, o melhor modelo foi Random Forest, com bom desempenho em sensitividade e F1-score.
-
-No cenário de pacientes mulheres, o Random Forest também foi o melhor pelo critério composto, mas o desempenho foi inferior, possivelmente por causa do menor número de registros femininos.
-
-## Conclusão
-
-A análise mostrou que a escolha do melhor modelo depende do cenário avaliado.
-
-Como a base é pequena e desbalanceada, a acurácia sozinha não é suficiente. Métricas como sensitividade, especificidade, F1-score e AUC dão uma visão mais justa do desempenho dos modelos.
+O principal aprendizado foi que o melhor modelo é aquele que apresenta equilíbrio entre desempenho, interpretação e utilidade prática.
