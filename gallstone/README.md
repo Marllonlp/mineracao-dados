@@ -1,105 +1,102 @@
-# Gallstone Disease Prediction — Predição de Cálculo Biliar
+# Gallstone Disease Prediction - Predição de Cálculo Biliar
 
 ## Objetivo do trabalho
 
-O objetivo deste trabalho foi aplicar técnicas de mineração de dados na base **Gallstone Disease Prediction**, buscando identificar quais variáveis ajudam a prever a presença de cálculo biliar.
+O objetivo deste trabalho foi prever a presença de cálculo biliar usando variáveis clínicas, laboratoriais e de composição corporal.
 
-A análise teve foco em três pontos principais:
+O ponto principal do trabalho não foi apenas treinar modelos. A pergunta mais importante foi:
 
-- avaliar se era realmente necessário usar um corte fixo de 10 variáveis;
-- comparar diferentes painéis de atributos;
-- escolher um painel com bom equilíbrio entre desempenho, estabilidade e custo de coleta.
+> É realmente necessário usar um painel fixo de 10 variáveis ou existe uma combinação melhor?
+
+Por isso, a análise comparou diferentes conjuntos de variáveis e avaliou qual deles entregava melhor equilíbrio entre desempenho, estabilidade, custo de coleta e sentido clínico.
+
+---
 
 ## Base de dados
 
-A base utilizada foi a **Gallstone Disease Prediction**, disponível no repositório UCI Machine Learning Repository.
+A base utilizada foi a **Gallstone Disease Prediction**, disponível no UCI Machine Learning Repository.
 
-A base contém informações clínicas, laboratoriais e corporais relacionadas à presença ou ausência de cálculo biliar.
-
-Resumo da base:
-
-| Informação | Descrição |
-|---|---|
-| Base | Gallstone Disease Prediction |
-| Quantidade de instâncias | 319 |
-| Quantidade de preditoras | 38 |
+| Informação | Valor |
+|---|---:|
+| Registros | 319 |
+| Variáveis preditoras | 38 |
 | Variável alvo | Gallstone |
 | Tipo de problema | Classificação supervisionada |
 
 A variável alvo indica se o paciente possui ou não cálculo biliar.
 
-## Problema analisado
+---
 
-O problema trabalhado foi de **classificação supervisionada**.
+## Resultado esperado
 
-A pergunta principal foi:
+O resultado esperado era encontrar um painel de variáveis que não fosse grande demais, mas que ainda mantivesse bom desempenho.
 
-> Com base em variáveis clínicas, laboratoriais e corporais, é possível prever a presença de cálculo biliar?
+Na prática, queríamos um conjunto que equilibrasse:
 
-Além disso, o trabalho também investigou se usar exatamente 10 variáveis era a melhor escolha ou se outro conjunto de atributos poderia gerar melhor resultado.
-
-## Desafio da base
-
-O principal desafio foi encontrar um painel de variáveis que fosse útil na prática.
-
-Não bastava escolher o maior número possível de atributos. Era necessário considerar:
-
-- desempenho estatístico;
-- quantidade de variáveis;
-- custo de coleta;
-- redundância entre variáveis;
+- boa capacidade de previsão;
+- menor redundância entre variáveis;
+- custo de coleta aceitável;
+- estabilidade dos resultados;
 - plausibilidade clínica.
 
-Algumas variáveis eram muito correlacionadas entre si, principalmente as relacionadas à composição corporal. Por isso, usar muitas variáveis poderia deixar o modelo mais caro e redundante, sem melhorar muito o resultado.
+Isso é importante porque usar muitas variáveis pode deixar o modelo mais caro, mais redundante e nem sempre melhora o resultado.
 
-## Metodologia
+---
 
-As principais etapas realizadas foram:
+## Metodologia usada
 
-1. Carregamento da base;
-2. Análise exploratória dos dados;
-3. Avaliação da distribuição da variável alvo;
-4. Análise de relevância das variáveis;
-5. Identificação de variáveis redundantes;
-6. Criação de painéis candidatos;
-7. Comparação dos painéis;
-8. Escolha do painel recomendado;
-9. Treinamento de diferentes modelos;
-10. Avaliação por múltiplas métricas.
+A metodologia seguiu estas etapas principais:
 
-## Painéis avaliados
+1. análise inicial da base;
+2. identificação da variável alvo;
+3. análise da relevância das variáveis;
+4. verificação de redundância entre variáveis;
+5. criação de painéis candidatos;
+6. comparação dos painéis;
+7. escolha do painel recomendado;
+8. teste com diferentes modelos de classificação;
+9. avaliação por múltiplas métricas.
 
-Foram comparados diferentes conjuntos de variáveis:
+Foram comparados quatro tipos de painel:
 
-| Painel | Descrição |
+| Painel | O que significa |
 |---|---|
-| full_38 | Utiliza todas as 38 variáveis |
-| raw_top_k | Usa as principais variáveis pelo ranking bruto de importância |
-| pruned_top_k | Usa variáveis selecionadas após remover redundância |
+| full_38 | Usa todas as 38 variáveis |
+| raw_top_k | Usa as variáveis mais importantes pelo ranking bruto |
+| pruned_top_k | Usa variáveis importantes após remover redundância |
 | raw_top_10 | Painel de referência com 10 variáveis |
 
-A análise comparou painéis com diferentes quantidades de atributos para verificar qual entregava o melhor custo-benefício.
+A ideia foi verificar se o painel fixo de 10 variáveis realmente era a melhor escolha.
 
-## Critério de escolha do painel
+---
 
-A escolha do painel levou em conta:
+## Métricas usadas
 
-- AUC;
-- F1-score;
-- sensitividade;
-- custo operacional;
-- número de variáveis;
-- estabilidade do resultado.
+As principais métricas foram:
 
-A regra foi escolher o painel elegível com menor custo operacional. Em caso de empate, seria escolhido o painel com menor número de variáveis e, depois, maior sensitividade.
+| Métrica | Interpretação |
+|---|---|
+| Acurácia | Percentual geral de acertos |
+| Sensibilidade | Capacidade de identificar pacientes com cálculo biliar |
+| Especificidade | Capacidade de identificar pacientes sem cálculo biliar |
+| F1-score | Equilíbrio entre precisão e sensibilidade |
+| AUC | Capacidade geral de separação entre as classes |
 
-## Painel recomendado
+Neste problema, a sensibilidade é muito importante, porque a base pode ser vista como apoio à triagem. Em triagem médica, é desejável identificar corretamente os casos positivos.
 
-O painel recomendado foi o **pruned_top_11**.
+---
 
-Esse painel utilizou 11 variáveis e apresentou o melhor equilíbrio entre desempenho, estabilidade e custo-benefício.
+## Resultado principal
 
-Variáveis do painel recomendado no cenário 80/20:
+O painel recomendado foi o **pruned_top_11**, com 11 variáveis.
+
+Esse painel teve melhor equilíbrio entre desempenho, custo-benefício e estabilidade do que assumir automaticamente um corte fixo de 10 variáveis.
+
+| Painel | Acurácia | Sensibilidade | F1-score | AUC | Nº de variáveis | Custo |
+|---|---:|---:|---:|---:|---:|---:|
+| pruned_top_11 | 74,41% | 81,60% | 75,22% | 87,04% | 11 | 10,0 |
+
+As variáveis recomendadas no cenário 80/20 foram:
 
 - CRP;
 - VitaminD;
@@ -113,34 +110,28 @@ Variáveis do painel recomendado no cenário 80/20:
 - Protein;
 - Hyperlipidemia.
 
-## Resultado do painel recomendado
+---
 
-O painel **pruned_top_11** apresentou os seguintes resultados médios na comparação dos painéis:
-
-| Painel | Acurácia | Sensitividade | F1-score | AUC | Nº de features | Custo total |
-|---|---:|---:|---:|---:|---:|---:|
-| pruned_top_11 | 74,41% | 81,60% | 75,22% | 87,04% | 11 | 10,0 |
-
-Esse resultado mostrou que o painel com 11 variáveis foi mais interessante do que assumir automaticamente um corte fixo de 10 variáveis.
-
-## Comparação com o painel de referência
+## Comparação com o painel de 10 variáveis
 
 O painel de referência era o **raw_top_10**, com 10 variáveis.
 
-Comparação:
+| Painel | Acurácia | Sensibilidade | F1-score | AUC |
+|---|---:|---:|---:|---:|
+| raw_top_10 | 71,16% | 74,13% | 70,03% | 86,78% |
+| pruned_top_11 | 74,41% | 81,60% | 75,22% | 87,04% |
 
-| Painel | Acurácia | Sensitividade | F1-score | AUC | Nº de features |
-|---|---:|---:|---:|---:|---:|
-| raw_top_10 | 71,16% | 74,13% | 70,03% | 86,78% | 10 |
-| pruned_top_11 | 74,41% | 81,60% | 75,22% | 87,04% | 11 |
+O painel **pruned_top_11** foi melhor em acurácia, sensibilidade e F1-score.
 
-O painel recomendado teve melhor acurácia, melhor sensitividade e melhor F1-score.
+Então, a conclusão foi que usar exatamente 10 variáveis não era a melhor decisão para esta base. O painel com 11 variáveis teve melhor resultado e ainda manteve um custo aceitável.
 
-## Modelos utilizados
+---
 
-Foram avaliados nove modelos de classificação:
+## Modelos avaliados
 
-- Logistic Regression;
+Depois da escolha do painel, foram avaliados diferentes modelos de classificação:
+
+- Regressão Logística;
 - Random Forest;
 - AdaBoost;
 - Gradient Boosting;
@@ -150,70 +141,49 @@ Foram avaliados nove modelos de classificação:
 - Naive Bayes;
 - KNN.
 
-A comparação entre os modelos ajudou a verificar qual técnica se comportava melhor com o painel selecionado.
+No cenário 80/20, a Regressão Logística teve o melhor equilíbrio geral, enquanto o Random Forest apresentou a maior AUC.
 
-## Melhor resultado no cenário 80/20
-
-No cenário 80/20, o painel recomendado apresentou bons resultados com diferentes modelos.
-
-Alguns destaques:
-
-| Modelo | Acurácia | Sensitividade | Especificidade | F1-score | AUC |
+| Modelo | Acurácia | Sensibilidade | Especificidade | F1-score | AUC |
 |---|---:|---:|---:|---:|---:|
-| Logistic Regression | 92,06% | 96,88% | 87,10% | 92,54% | 90,62% |
+| Regressão Logística | 92,06% | 96,88% | 87,10% | 92,54% | 90,62% |
 | Random Forest | 88,89% | 93,75% | 83,87% | 89,55% | 94,76% |
 | Gradient Boosting | 84,13% | 84,38% | 83,87% | 84,38% | 90,73% |
 | SVM Radial | 84,13% | 90,62% | 77,42% | 85,29% | 92,14% |
 
-A Regressão Logística teve o melhor equilíbrio geral no cenário 80/20, enquanto o Random Forest apresentou a maior AUC.
+---
 
-## Interpretação dos resultados
+## Interpretação
 
-O resultado principal foi que o painel **pruned_top_11** se mostrou mais adequado do que o painel fixo de 10 variáveis.
+O principal resultado foi que o melhor painel não foi simplesmente o menor painel.
 
-Isso aconteceu porque ele conseguiu:
+O painel recomendado funcionou melhor porque conseguiu:
 
 - reduzir redundância entre variáveis;
 - manter boa capacidade de previsão;
-- melhorar a sensitividade;
+- melhorar a sensibilidade;
 - manter custo operacional aceitável;
-- apresentar plausibilidade clínica.
+- preservar sentido clínico.
 
-A sensitividade foi especialmente importante porque, em um problema de triagem, é desejável identificar corretamente os casos positivos.
+Também é importante destacar que o modelo não deve ser interpretado como diagnóstico médico. Ele serve como apoio à triagem e à análise de padrões.
 
-## Faz sentido na prática?
-
-Sim, desde que o modelo seja interpretado como uma ferramenta de **apoio à triagem**, e não como substituto de exames clínicos ou de imagem.
-
-O trabalho não afirma causalidade. Ou seja, uma variável preditiva não significa automaticamente que ela seja a causa da doença.
-
-A ideia é usar o modelo como apoio para indicar padrões associados à presença de cálculo biliar.
+---
 
 ## Limitações
 
 As principais limitações foram:
 
-- base pequena;
-- dados de centro único;
-- possível instabilidade no ranking das variáveis;
-- presença de variáveis fortemente redundantes;
-- ausência de validação externa;
-- o modelo não substitui avaliação clínica especializada.
+- a base é pequena;
+- os dados vêm de um único centro;
+- não houve validação externa;
+- algumas variáveis de composição corporal são muito redundantes;
+- o modelo não substitui exames clínicos ou exames de imagem.
+
+---
 
 ## Conclusão
 
 A principal conclusão é que não era ideal assumir automaticamente um corte fixo de 10 variáveis.
 
-O painel **pruned_top_11** apresentou melhor equilíbrio entre desempenho, estabilidade e custo-benefício.
+O painel **pruned_top_11** apresentou melhor equilíbrio entre desempenho, sensibilidade, estabilidade e custo-benefício.
 
-Mesmo usando apenas 11 variáveis, o painel conseguiu bons resultados e se mostrou mais útil para uma proposta de triagem clínica.
-
-## Como explicar na apresentação
-
-Nesta base, o objetivo foi prever a presença de cálculo biliar usando variáveis clínicas, laboratoriais e corporais.
-
-O diferencial do trabalho foi não aceitar automaticamente o corte de 10 variáveis. Em vez disso, foram testados vários painéis, considerando desempenho, custo e redundância.
-
-O painel escolhido foi o pruned_top_11, com 11 variáveis. Ele teve acurácia de 74,41%, sensitividade de 81,60%, F1-score de 75,22% e AUC de 87,04%.
-
-A conclusão é que esse painel teve melhor custo-benefício do que o painel fixo de 10 variáveis e pode ser usado como apoio à triagem, mas não substitui exames médicos. 
+Portanto, para esta base, um painel pequeno e bem selecionado foi mais útil do que simplesmente escolher um número fixo de variáveis.

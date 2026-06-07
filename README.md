@@ -15,11 +15,11 @@ O objetivo principal não é apresentar código, mas sim explicar:
 
 ---
 
-## Organização da apresentação
+## Organização dos trabalhos
 
-A apresentação será feita diretamente pelo GitHub, utilizando este README como roteiro principal.
+Os trabalhos estão organizados por pastas no repositório. Este README reúne uma visão geral das bases analisadas, das metodologias usadas e dos principais resultados.
 
-Cada trabalho possui sua própria pasta com os arquivos da análise, relatório e README individual. Durante a apresentação, o grupo deve priorizar a explicação dos resultados e da metodologia, sem entrar em detalhes técnicos de programação.
+Cada trabalho possui sua própria pasta com os arquivos da análise, relatório e README individual.
 
 ---
 
@@ -27,11 +27,7 @@ Cada trabalho possui sua própria pasta com os arquivos da análise, relatório 
 
 ## Parte 1 — Introdução geral e metodologia comum
 
-Responsável: **[Nome do integrante]**
-
-### O que apresentar
-
-Nesta primeira parte, deve ser explicado o contexto geral da disciplina e o que todos os trabalhos têm em comum.
+### Metodologia comum
 
 Os trabalhos analisam bases de dados diferentes, mas todos seguem uma lógica parecida:
 
@@ -44,7 +40,7 @@ Os trabalhos analisam bases de dados diferentes, mas todos seguem uma lógica pa
 7. comparação dos resultados;
 8. conclusão sobre o melhor modelo ou melhor abordagem.
 
-### Pontos principais para falar
+### Contexto geral
 
 A mineração de dados permite extrair padrões úteis a partir de bases reais. Nos trabalhos apresentados, foram analisadas bases ligadas a crédito, saúde, toxicologia e comportamento de consumo.
 
@@ -65,24 +61,16 @@ Isso é importante porque várias bases são desbalanceadas. Quando uma classe a
 | MCC | Medida equilibrada para bases desbalanceadas |
 | Acurácia balanceada | Média entre sensibilidade e especificidade |
 
-### Transição para a Parte 2
+# Parte 2 — Trabalhos individuais
 
-Depois dessa visão geral, a apresentação passa para os trabalhos individuais, mostrando o problema de cada base, a estratégia usada e os principais resultados.
+Os trabalhos individuais foram organizados a partir dos seguintes pontos:
 
----
-
-# Parte 2 — Apresentação dos trabalhos individuais
-
-Responsável: **[Nome do integrante]**
-
-Nesta parte, o grupo apresenta cada base de forma objetiva. A ideia é seguir sempre a mesma estrutura:
-
-1. qual é a base;
-2. qual é o objetivo;
-3. qual foi a estratégia usada;
-4. quais foram as principais métricas;
-5. qual foi o resultado mais importante;
-6. qual foi a conclusão.
+1. base de dados;
+2. objetivo;
+3. estratégia usada;
+4. principais métricas;
+5. principais resultados;
+6. conclusão.
 
 ---
 
@@ -317,8 +305,6 @@ Por isso, a avaliação considerou sensibilidade, especificidade, F1-score e AUC
 
 # Parte 3 — Comparação geral e fechamento
 
-Responsável: **[Nome do integrante]**
-
 ## Comparação entre os trabalhos
 
 Apesar de cada base tratar de um problema diferente, todos os trabalhos mostram uma ideia em comum:
@@ -361,71 +347,8 @@ A partir dos trabalhos, o grupo identificou alguns aprendizados importantes:
 
 ---
 
-## Como apresentar pelo GitHub
+## Conclusão geral
 
-A apresentação deve seguir esta ordem:
+Os trabalhos mostram que mineração de dados não se resume a aplicar um algoritmo. É necessário entender o problema, preparar corretamente os dados, escolher métricas adequadas e interpretar os resultados conforme o contexto.
 
-1. Abrir o repositório no GitHub.
-2. Começar por este README principal.
-3. Explicar o tema geral e a organização dos trabalhos.
-4. Apresentar a Parte 1: introdução e metodologia comum.
-5. Apresentar a Parte 2: resumo dos cinco trabalhos.
-6. Entrar nas pastas individuais apenas para mostrar relatórios, tabelas ou gráficos.
-7. Evitar abrir arquivos de código, a menos que a professora peça.
-8. Finalizar com a Parte 3: comparação geral e conclusão.
-
----
-
-## O que não fazer na apresentação
-
-- Não gastar tempo explicando linha por linha de código.
-- Não abrir scripts grandes sem necessidade.
-- Não falar apenas “usamos IA/modelo” sem explicar o motivo.
-- Não escolher o melhor modelo só pela acurácia.
-- Não apresentar todas as tabelas completas se o tempo for curto.
-- Não deixar cada integrante apresentar de um jeito totalmente diferente.
-
----
-
-## Roteiro rápido de fala
-
-### Abertura
-
-“Boa tarde. Nós vamos apresentar os trabalhos desenvolvidos na disciplina de Temática em Mineração de Dados. A apresentação foi organizada pelo GitHub, mas o foco não será no código. Vamos mostrar o problema de cada base, a metodologia aplicada, as métricas usadas e os principais resultados.”
-
-### Explicação geral
-
-“Apesar de as bases serem diferentes, todas envolvem problemas de classificação. Por isso, avaliamos os modelos por métricas como acurácia, sensibilidade, especificidade, F1-score e AUC. Em algumas bases, a acurácia sozinha não era suficiente, principalmente por causa do desbalanceamento das classes.”
-
-### Transição para os trabalhos
-
-“Agora vamos apresentar cada trabalho individualmente, mantendo a mesma estrutura: objetivo da base, estratégia usada, principais resultados e conclusão.”
-
-### Fechamento
-
-“Como conclusão geral, os trabalhos mostram que mineração de dados não é apenas aplicar um algoritmo. É necessário entender o problema, preparar corretamente os dados, escolher métricas adequadas e interpretar os resultados conforme o contexto. Em vários casos, o modelo mais útil não foi simplesmente o de maior acurácia, mas aquele que apresentou melhor equilíbrio entre desempenho, sensibilidade, especificidade e aplicabilidade real.”
-
----
-
-## Divisão sugerida entre 3 partes
-
-| Parte | Conteúdo | Responsável |
-|---|---|---|
-| Parte 1 | Introdução geral, objetivo da apresentação e metodologia comum | [Nome] |
-| Parte 2 | Apresentação dos cinco trabalhos individuais | [Nome] |
-| Parte 3 | Comparação geral, aprendizados e conclusão | [Nome] |
-
----
-
-## Ordem final da apresentação
-
-1. Introdução geral
-2. Explicação das métricas
-3. Cartão de Crédito
-4. InterDIA
-5. Drug Consumption
-6. Gallstone Disease Prediction
-7. ILPD
-8. Comparação geral
-9. Aprendizados
-10. Conclusão
+Em vários casos, o modelo mais útil não foi simplesmente o de maior acurácia, mas aquele que apresentou melhor equilíbrio entre desempenho, sensibilidade, especificidade e aplicabilidade real.

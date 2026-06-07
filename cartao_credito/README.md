@@ -125,9 +125,3 @@ A análise mostrou que a mineração de dados pode auxiliar na previsão de inad
 O uso de Random Forest, RFE, SMOTE e ajuste de limiar tornou o modelo mais adequado para o contexto real de risco de crédito.
 
 A principal conclusão é que, nesse tipo de problema, a acurácia sozinha não é suficiente. É necessário analisar métricas como sensibilidade, especificidade e AUC para entender se o modelo realmente ajuda na tomada de decisão.
-
-## Como explicar na apresentação
-
-Nesta base, o foco foi prever se um cliente de cartão de crédito poderia se tornar inadimplente. Para isso, usamos um modelo de classificação chamado Random Forest, aplicamos seleção de variáveis com RFE, tratamos o desbalanceamento com SMOTE e ajustamos o limiar de decisão.
-
-O principal resultado foi que o modelo manteve AUC de 0,753, mas conseguiu melhorar a sensibilidade ao mudar o limiar de 0,50 para 0,38. Isso é importante porque, em crédito, detectar clientes inadimplentes é mais relevante do que apenas ter uma acurácia geral alta.

@@ -132,13 +132,3 @@ A análise mostrou que o modelo EasyEnsemble Screening foi o mais adequado para 
 O principal ponto do trabalho foi mostrar que, em bases desbalanceadas e ligadas à segurança, o melhor modelo não deve ser escolhido apenas pela acurácia.
 
 Neste caso, métricas como sensitividade, especificidade, MCC e AUC foram mais importantes para avaliar se o modelo realmente seria útil em uma situação prática de triagem toxicológica.
-
-## Como explicar na apresentação
-
-Nesta base, o objetivo foi prever se um composto químico poderia estar associado à autoimunidade induzida por fármacos.
-
-A base era desbalanceada, com menos compostos positivos do que negativos. Por isso, a análise priorizou métricas além da acurácia, principalmente sensitividade e AUC.
-
-Foram testados três modelos: Elastic Net, Weighted Ranger e EasyEnsemble Screening. O melhor resultado foi do EasyEnsemble Screening, que atingiu AUC de 0,897, sensitividade de 0,900 e especificidade de 0,778 no teste externo.
-
-A conclusão principal é que o modelo conseguiu bom equilíbrio entre detectar compostos de risco e evitar excesso de falsos alarmes.

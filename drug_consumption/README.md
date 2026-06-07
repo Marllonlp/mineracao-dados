@@ -168,13 +168,3 @@ A principal conclusão é que, para a base Drug Consumption, não é ideal usar 
 Cada substância possui comportamento e distribuição diferentes. Por isso, testar modelos separadamente e ajustar o limiar de decisão tornou a análise mais equilibrada.
 
 Mesmo com acurácia média menor, a análise proposta foi mais útil porque melhorou a identificação dos usuários e avaliou melhor o desempenho em bases desbalanceadas.
-
-## Como explicar na apresentação
-
-Nesta base, o objetivo foi prever se uma pessoa seria classificada como usuária ou não usuária para diferentes substâncias.
-
-O maior desafio foi o desbalanceamento, porque algumas drogas tinham muitos usuários e outras tinham poucos. Por isso, não dava para avaliar apenas pela acurácia.
-
-A estratégia foi testar vários modelos para cada droga, aplicar técnicas como SMOTE, ADASYN, pesos de classe e ajuste de limiar.
-
-O principal resultado foi que a análise proposta melhorou a sensitividade média, passando de cerca de 59,89% no artigo para 72,56%. Isso significa que o modelo ficou melhor para identificar usuários, mantendo equilíbrio com a especificidade.
