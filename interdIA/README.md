@@ -4,15 +4,11 @@
 
 O objetivo deste trabalho foi aplicar técnicas de mineração de dados para prever se determinados compostos químicos apresentam risco de causar autoimunidade induzida por fármacos.
 
-A ideia principal foi analisar descritores moleculares dos compostos e verificar se esses padrões químicos poderiam indicar maior risco de desencadear respostas autoimunes.
+A análise utiliza descritores moleculares dos compostos e verifica se esses padrões químicos ajudam a identificar maior risco de respostas autoimunes.
 
 ## Base de dados
 
-A base utilizada foi disponibilizada no UCI Machine Learning Repository.
-
-Ela contém compostos químicos representados por descritores moleculares. Cada composto possui uma classificação indicando se está associado ou não à autoimunidade induzida por fármacos.
-
-A base foi dividida em dois conjuntos:
+A base foi disponibilizada no UCI Machine Learning Repository. Ela contém compostos químicos representados por descritores moleculares, com classificação indicando associação ou não com autoimunidade induzida por fármacos.
 
 | Conjunto | Total | Positivos | Negativos | Taxa de positivos |
 |---|---:|---:|---:|---:|
@@ -23,36 +19,28 @@ Foram utilizados os mesmos 65 descritores moleculares publicados no artigo de re
 
 ## Problema analisado
 
-O problema trabalhado foi de **classificação supervisionada**.
+O problema é de **classificação supervisionada**.
 
 A pergunta principal foi:
 
 > Com base nos descritores moleculares de um composto, é possível prever se ele apresenta risco de autoimunidade induzida por fármacos?
 
-Esse tipo de análise pode ser útil em etapas iniciais do desenvolvimento de medicamentos, ajudando a identificar compostos que merecem maior atenção antes de avançarem para fases posteriores.
-
-## Desafio da base
-
-A base é desbalanceada, pois existem menos compostos positivos do que negativos.
-
-Isso significa que a acurácia sozinha não é suficiente para avaliar o modelo. Um modelo poderia acertar muitos compostos negativos e ainda assim falhar justamente nos casos mais importantes: os compostos com possível risco autoimune.
-
-Por isso, a análise deu atenção especial à sensitividade, especificidade, MCC e AUC.
+Esse tipo de análise pode ser útil em etapas iniciais do desenvolvimento de medicamentos, ajudando a identificar compostos que exigem atenção antes de avançarem para fases posteriores.
 
 ## Metodologia
 
-As principais etapas realizadas foram:
+As principais etapas foram:
 
-1. Carregamento da base oficial;
-2. Separação entre treino e teste externo;
-3. Uso do subconjunto de 65 descritores moleculares;
-4. Treinamento de diferentes modelos;
-5. Escolha do limiar de classificação com base no treino;
-6. Avaliação final no conjunto de teste externo;
-7. Análise dos descritores mais importantes;
-8. Comparação com o benchmark publicado.
+1. carregamento da base oficial;
+2. separação entre treino e teste externo;
+3. uso do subconjunto de 65 descritores moleculares;
+4. treinamento de diferentes modelos;
+5. escolha do limiar de classificação com base no treino;
+6. avaliação final no conjunto de teste externo;
+7. análise dos descritores mais importantes;
+8. comparação com o benchmark publicado.
 
-## Modelos testados
+## Modelos avaliados
 
 Foram comparados três modelos principais:
 
@@ -64,14 +52,6 @@ Foram comparados três modelos principais:
 
 O modelo escolhido como principal foi o **EasyEnsemble Screening**.
 
-## Escolha do limiar
-
-O limiar de classificação não foi fixado automaticamente em 0,50.
-
-A estratégia foi escolher um limiar que mantivesse boa sensitividade, porque, neste problema, deixar passar um composto potencialmente perigoso seria mais grave do que gerar alguns alertas falsos.
-
-O limiar final escolhido para o modelo principal foi **0,49**.
-
 ## Métricas utilizadas
 
 As principais métricas avaliadas foram:
@@ -79,10 +59,10 @@ As principais métricas avaliadas foram:
 | Métrica | O que indica |
 |---|---|
 | Acurácia | Percentual geral de acertos |
-| Sensitividade | Capacidade de identificar compostos positivos |
+| Sensibilidade | Capacidade de identificar compostos positivos |
 | Especificidade | Capacidade de identificar compostos negativos |
 | Precisão | Proporção de positivos previstos corretamente |
-| F1-score | Equilíbrio entre precisão e sensitividade |
+| F1-score | Equilíbrio entre precisão e sensibilidade |
 | MCC | Qualidade geral da classificação em base desbalanceada |
 | AUC | Capacidade geral de separação entre as classes |
 
@@ -90,45 +70,28 @@ As principais métricas avaliadas foram:
 
 No teste externo, o modelo **EasyEnsemble Screening** apresentou o melhor desempenho geral.
 
-| Modelo | Acurácia | Sensitividade | Especificidade | F1-score | MCC | AUC |
+| Modelo | Acurácia | Sensibilidade | Especificidade | F1-score | MCC | AUC |
 |---|---:|---:|---:|---:|---:|---:|
 | EasyEnsemble Screening | 0,808 | 0,900 | 0,778 | 0,701 | 0,601 | 0,897 |
 | Weighted Ranger | 0,758 | 0,833 | 0,733 | 0,633 | 0,499 | 0,883 |
 | Elastic Net | 0,250 | 0,933 | 0,022 | 0,384 | -0,107 | 0,560 |
 
-## Interpretação dos resultados
+O limiar final escolhido para o modelo principal foi **0,49**, priorizando boa sensibilidade sem eliminar a especificidade.
 
-O melhor modelo foi o **EasyEnsemble Screening**, porque conseguiu equilibrar bem a identificação de compostos positivos e negativos.
+## Arquivos principais
 
-O resultado foi considerado forte por três motivos:
-
-1. apresentou **AUC alta**, indicando boa separação entre as classes;
-2. teve **sensitividade de 0,900**, importante para triagem de risco;
-3. manteve **especificidade de 0,778**, evitando excesso de falsos alarmes.
-
-Em outras palavras, o modelo conseguiu identificar grande parte dos compostos de risco sem classificar quase tudo como perigoso.
-
-## Descritores mais importantes
-
-Alguns dos descritores moleculares mais relevantes foram:
-
-| Descritor | Importância |
-|---|---:|
-| Ipc | 0,0599 |
-| Chi0 | 0,0582 |
-| SlogP_VSA5 | 0,0550 |
-| EState_VSA1 | 0,0538 |
-| HallKierAlpha | 0,0535 |
-| RingCount | 0,0534 |
-| BalabanJ | 0,0531 |
-| Kappa3 | 0,0511 |
-
-Esses descritores representam características químicas e estruturais dos compostos, como conectividade molecular, presença de anéis e propriedades relacionadas à superfície molecular.
+| Arquivo ou pasta | Conteúdo |
+|---|---|
+| `data/raw/` | Arquivos brutos e descritores moleculares |
+| `interdia_analysis.R` | Script reprodutível da análise |
+| `interdia_report.Rmd` | Fonte do relatório |
+| `interdia_report.pdf` | Relatório final em PDF |
+| `outputs/figures/` | Figuras geradas pelo pipeline |
+| `outputs/tables/` | Tabelas de resultados |
+| `outputs/results/` | Objeto de apoio usado pelo relatório |
 
 ## Conclusão
 
-A análise mostrou que o modelo EasyEnsemble Screening foi o mais adequado para prever risco de autoimunidade induzida por fármacos.
+O modelo **EasyEnsemble Screening** foi o mais adequado para prever risco de autoimunidade induzida por fármacos.
 
-O principal ponto do trabalho foi mostrar que, em bases desbalanceadas e ligadas à segurança, o melhor modelo não deve ser escolhido apenas pela acurácia.
-
-Neste caso, métricas como sensitividade, especificidade, MCC e AUC foram mais importantes para avaliar se o modelo realmente seria útil em uma situação prática de triagem toxicológica.
+O principal ponto do trabalho foi mostrar que, em bases desbalanceadas e ligadas à segurança, o melhor modelo não deve ser escolhido apenas pela acurácia. Métricas como sensibilidade, especificidade, MCC e AUC são essenciais para avaliar se o modelo realmente ajuda em uma situação prática de triagem toxicológica.

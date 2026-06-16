@@ -1,0 +1,8 @@
+"Check","Observed","Expected","Pass"
+"Linhas",240,240,TRUE
+"Colunas",29,29,TRUE
+"Valores ausentes",0,0,TRUE
+"Produtos",10,10,TRUE
+"Provadores",8,8,TRUE
+"Replicas",3,3,TRUE
+"Variaveis sensoriais",23,23,TRUE

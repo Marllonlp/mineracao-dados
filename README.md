@@ -42,7 +42,7 @@ Os trabalhos analisam bases de dados diferentes, mas todos seguem uma lógica pa
 
 ### Contexto geral
 
-A mineração de dados permite extrair padrões úteis a partir de bases reais. Nos trabalhos apresentados, foram analisadas bases ligadas a crédito, saúde, toxicologia e comportamento de consumo.
+A mineração de dados permite extrair padrões úteis a partir de bases reais. Nos trabalhos apresentados, foram analisadas bases ligadas a crédito, saúde, toxicologia, comportamento de consumo e análise sensorial.
 
 Em todos os casos, a escolha do melhor modelo não foi feita apenas pela acurácia. Também foram consideradas métricas como sensibilidade, especificidade, F1-score, AUC, MCC e acurácia balanceada, dependendo do problema.
 
@@ -303,6 +303,43 @@ Por isso, a avaliação considerou sensibilidade, especificidade, F1-score e AUC
 
 ---
 
+## 6. Cream Cheese
+
+### Problema
+
+A base Cream Cheese reúne avaliações sensoriais de diferentes produtos de cream cheese. O objetivo é identificar quais atributos diferenciam os produtos e quais características estão mais associadas à cremosidade percebida.
+
+A variável central da análise foi:
+
+- **MCreaminess**
+
+### Estratégia usada
+
+A análise combinou técnicas exploratórias e modelos interpretáveis para entender o perfil sensorial dos produtos.
+
+Foram utilizadas estratégias como:
+
+- ANOVA para comparar atributos entre produtos;
+- correlações com a cremosidade;
+- ranking médio por produto;
+- clusterização hierárquica;
+- PCA;
+- árvore de decisão para regras simples de interpretação.
+
+### Principais resultados
+
+A análise mostrou que 18 dos 23 atributos sensoriais diferenciam os produtos de forma estatisticamente detectável.
+
+Os atributos mais associados positivamente à cremosidade foram ligados a gordura, manteiga, doçura, sal e creme. Já atributos como farináceo, granulado, azedo e leite envelhecido tiveram associação negativa com a cremosidade.
+
+O produto com maior média de cremosidade foi o **04 - D-CH**.
+
+### Conclusão
+
+A base mostrou que a percepção de cremosidade está ligada a um perfil sensorial gorduroso, amanteigado e mais liso. A análise também separou os produtos em grupos sensoriais úteis para comparação, formulação e controle de qualidade.
+
+---
+
 # Parte 3 — Comparação geral e fechamento
 
 ## Comparação entre os trabalhos
@@ -320,6 +357,7 @@ Apesar de cada base tratar de um problema diferente, todos os trabalhos mostram 
 | Drug Consumption | Comportamento de consumo | Equilíbrio por droga | Modelos diferentes por substância |
 | Gallstone | Saúde / cálculo biliar | Custo-benefício das variáveis | Painel pruned_top_11 |
 | ILPD | Saúde / doença hepática | Classes desbalanceadas | Escolha por cenário e múltiplas métricas |
+| Cream Cheese | Análise sensorial | Entender atributos de cremosidade | ANOVA, correlação, PCA e clusterização |
 
 ---
 
