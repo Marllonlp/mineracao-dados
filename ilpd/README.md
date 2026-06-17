@@ -1,189 +1,176 @@
-# ILPD - Predição de Doença Hepática
+# Análise de Dados do Indian Liver Patient Dataset - ILPD
 
-## Objetivo do trabalho
+Este projeto contém uma análise completa em R do **Indian Liver Patient Dataset (ILPD)**, com foco na predição de doença hepática a partir de variáveis demográficas e bioquímicas.
 
-O objetivo deste trabalho foi prever se um paciente apresenta ou não doença hepática usando informações demográficas e exames bioquímicos.
+A análise foi construída com base no artigo **"Um Estudo sobre o Dataset Indian Liver Patient Dataset (ILPD)"** e busca melhorar a entrega original por meio de validação cruzada, tratamento do desbalanceamento, múltiplas métricas, gráficos, tabelas e comparação entre cenários.
 
-O ponto principal do trabalho foi lidar com uma base desbalanceada. A maioria dos registros pertence à classe de pacientes doentes, então a acurácia sozinha poderia dar uma visão incompleta do desempenho.
+## Estrutura do projeto
 
-Por isso, a análise comparou diferentes modelos e avaliou várias métricas, como sensibilidade, especificidade, F1-score e AUC.
-
----
+```text
+ilpd_projeto/
+├── analise_ilpd.R
+├── relatorio_ilpd.Rmd
+├── README.md
+├── dados/
+│   └── coloque_aqui_o_CSV_do_ILPD.csv
+├── resultados/
+│   └── arquivos CSV gerados pela análise
+└── graficos/
+    └── arquivos PNG gerados pela análise
+```
 
 ## Base de dados
 
-A base utilizada foi a **Indian Liver Patient Dataset - ILPD**.
+A base incluída em `dados/` contém o ILPD em formato CSV sem cabeçalho, conforme a estrutura original. O script renomeia automaticamente as colunas para:
 
-Ela contém registros de pacientes com variáveis relacionadas à função hepática.
+1. `Age`
+2. `Gender`
+3. `Total_Bilirubin`
+4. `Direct_Bilirubin`
+5. `Alkaline_Phosphatase`
+6. `Alamine_Aminotransferase`
+7. `Aspartate_Aminotransferase`
+8. `Total_Proteins`
+9. `Albumin`
+10. `Albumin_and_Globulin_Ratio`
+11. `Selector`
 
-| Informação | Valor |
-|---|---:|
-| Total de registros | 583 |
-| Total de colunas | 11 |
-| Pacientes doentes | 416 |
-| Pacientes saudáveis | 167 |
-| Percentual de doentes | 71,36% |
-| Percentual de saudáveis | 28,64% |
+A variável `Selector` é convertida para:
 
-A variável alvo original foi convertida para duas classes:
+- `Doente`: pacientes com doença hepática;
+- `Saudavel`: pacientes sem doença hepática.
 
-| Valor original | Classe usada |
-|---|---|
-| 1 | Doente |
-| 2 | Saudável |
+## Pacotes utilizados
 
----
+O script verifica automaticamente se os pacotes estão instalados. Caso algum pacote esteja ausente, ele será instalado automaticamente antes de ser carregado.
 
-## Problema analisado
+Principais pacotes utilizados:
 
-O problema é de **classificação supervisionada**.
+- `tidyverse`
+- `caret`
+- `ranger`
+- `e1071`
+- `kernlab`
+- `naivebayes`
+- `xgboost`
+- `pROC`
+- `vip`
+- `knitr`
+- `kableExtra`
+- `rmarkdown`
 
-A pergunta principal foi:
+## Ordem correta de execução
 
-> Com base em características demográficas e bioquímicas, é possível prever se um paciente possui doença hepática?
+Há apenas um script principal de análise.
 
-Esse tipo de análise pode ser usado como apoio à triagem, ajudando a identificar padrões associados à presença de doença hepática.
+### 1. Abrir o projeto no RStudio
 
----
+Abra a pasta `ilpd_projeto/` no RStudio e confirme que o arquivo CSV está dentro da pasta `dados/`.
 
-## Resultado esperado
+### 2. Executar o script principal
 
-Como a base é desbalanceada, o resultado esperado não era apenas obter a maior acurácia.
+No console do RStudio, execute:
 
-O objetivo era encontrar modelos que equilibrassem:
+```r
+source("analise_ilpd.R")
+```
 
-- identificação de pacientes doentes;
-- identificação de pacientes saudáveis;
-- bom desempenho geral;
-- avaliação mais justa das classes;
-- menor risco de escolher um modelo enganoso por causa do desbalanceamento.
+Esse comando irá:
 
-Isso é importante porque 71,36% dos registros são de pacientes doentes. Um modelo poderia favorecer essa classe e parecer bom pela acurácia, mesmo errando muitos pacientes saudáveis.
+- carregar e preparar a base ILPD;
+- verificar e tratar valores ausentes no fluxo de modelagem;
+- gerar análise exploratória;
+- separar os dados em treino e teste com estratificação;
+- treinar modelos com validação cruzada estratificada de 10 folds;
+- aplicar balanceamento por upsampling dentro da validação cruzada;
+- avaliar os modelos no conjunto de teste;
+- calcular acurácia, sensitividade, especificidade, precisão, recall, F1 e AUC;
+- gerar tabelas CSV na pasta `resultados/`;
+- gerar gráficos PNG na pasta `graficos/`;
+- repetir a análise para base completa, homens e mulheres;
+- comparar os resultados com as acurácias aproximadas do artigo.
 
----
+### 3. Gerar o relatório
 
-## Metodologia usada
+Depois de executar o script, abra `relatorio_ilpd.Rmd` no RStudio e clique em **Knit**.
 
-A metodologia seguiu estas etapas principais:
+Também é possível executar:
 
-1. carregamento da base;
-2. renomeação das colunas;
-3. conversão da variável `Gender` para fator;
-4. conversão da variável alvo para Doente e Saudável;
-5. verificação de valores ausentes;
-6. tratamento dos 4 valores ausentes em `Albumin_and_Globulin_Ratio`;
-7. separação estratificada entre treino e teste;
-8. validação cruzada estratificada com 10 folds;
-9. tratamento do desbalanceamento com upsampling;
-10. imputação por mediana;
-11. centralização e padronização dos dados;
-12. treinamento dos modelos;
-13. avaliação final no conjunto de teste.
+```r
+rmarkdown::render("relatorio_ilpd.Rmd")
+```
 
-A análise foi feita em três cenários:
-
-| Cenário | Descrição |
-|---|---|
-| Base completa | Todos os pacientes |
-| Homens | Apenas pacientes do sexo masculino |
-| Mulheres | Apenas pacientes do sexo feminino |
-
-Essa divisão permitiu verificar se os modelos se comportavam de forma diferente dependendo do grupo analisado.
-
----
+Se o relatório for renderizado antes da execução do script, ele tentará executar `analise_ilpd.R` automaticamente para gerar os arquivos necessários.
 
 ## Modelos avaliados
 
-Foram comparados diferentes modelos de classificação:
+O projeto testa os seguintes modelos:
 
 - Regressão Logística;
 - Random Forest;
-- SVM Radial;
+- SVM com kernel radial;
 - Naive Bayes;
 - XGBoost.
 
-Os resultados finais priorizam os modelos com desempenho mais relevante nas tabelas comparativas.
+## Cenários avaliados
 
----
+A análise é repetida em três cenários:
 
-## Métricas usadas
+1. base completa;
+2. apenas pacientes homens;
+3. apenas pacientes mulheres.
 
-As principais métricas foram:
+Nos cenários por gênero, a variável `Gender` é removida automaticamente quando fica constante, evitando problemas de modelagem.
 
-| Métrica | Interpretação |
-|---|---|
-| Acurácia | Percentual geral de acertos |
-| Sensibilidade | Capacidade de identificar pacientes doentes |
-| Especificidade | Capacidade de identificar pacientes saudáveis |
-| Precisão | Proporção de previsões positivas corretas |
-| F1-score | Equilíbrio entre precisão e sensibilidade |
-| AUC | Capacidade geral de separação entre as classes |
+## Estratégia contra vazamento de dados
 
-Neste problema, sensibilidade e especificidade são importantes porque a base envolve saúde e possui classes desbalanceadas.
+Para evitar vazamento de dados, o conjunto de teste é separado antes da modelagem final. As etapas de imputação, padronização, remoção de variáveis de variância zero, balanceamento e ajuste de hiperparâmetros ocorrem dentro do fluxo de treinamento e validação cruzada.
 
----
+O conjunto de teste é usado apenas para a avaliação final.
 
-## Resultados principais
+## Métricas geradas
 
-Os melhores modelos por cenário foram:
+A tabela comparativa final contém:
 
-| Cenário | Melhor modelo | Acurácia | Sensibilidade | Especificidade | F1-score | AUC |
-|---|---|---:|---:|---:|---:|---:|
-| Base completa | Regressão Logística | 68,4% | 62,1% | 84,0% | 73,7% | 76,8% |
-| Homens | Random Forest | 75,0% | 82,5% | 54,3% | 82,9% | 82,2% |
-| Mulheres | Random Forest | 59,5% | 63,0% | 53,3% | 66,7% | 66,4% |
+```text
+Cenario | Modelo | Acuracia | Sensitividade | Especificidade | Precisao | Recall | F1 | AUC
+```
 
-Na base completa, a Regressão Logística foi escolhida pelo critério composto, porque apresentou melhor equilíbrio geral, principalmente pela especificidade de 84,0%.
+Como a base é desbalanceada, a escolha do melhor modelo não se baseia apenas em acurácia. O script também calcula um `Score_Geral`, considerando acurácia, sensitividade, especificidade, F1-score e AUC.
 
-No cenário masculino, o melhor modelo foi o Random Forest. Esse foi o melhor cenário geral da análise, com acurácia de 75,0%, sensibilidade de 82,5% e AUC de 82,2%.
+## Principais arquivos gerados
 
-No cenário feminino, o melhor modelo também foi o Random Forest, mas os resultados foram mais baixos. Isso provavelmente aconteceu porque havia menos registros de mulheres, deixando o treinamento mais instável.
+Na pasta `resultados/`:
 
----
+- `tabela_comparativa_final.csv`
+- `metricas_todos_os_modelos.csv`
+- `melhores_modelos_por_cenario.csv`
+- `comparacao_com_artigo.csv`
+- `resumo_estatistico.csv`
+- `valores_ausentes.csv`
+- `matriz_correlacao.csv`
+- tabelas específicas por cenário
 
-## Comparação com o artigo
+Na pasta `graficos/`:
 
-O artigo de referência apresentou acurácias próximas de 71% a 76%, dependendo do cenário e do modelo.
+- `distribuicao_classes.png`
+- `distribuicao_genero.png`
+- `distribuicao_variaveis_numericas.png`
+- `matriz_correlacao.png`
+- `acuracia_modelos_completa.png`
+- `sensitividade_especificidade_completa.png`
+- `curva_roc_melhores_modelos_completa.png`
+- `importancia_variaveis_melhor_modelo_completa.png`
+- gráficos equivalentes para homens e mulheres
+- `comparacao_acuracia_artigo.png`
 
-Neste projeto, os resultados de acurácia ficaram abaixo do artigo, mas a análise foi mais completa porque avaliou múltiplas métricas, tratou o desbalanceamento e comparou os cenários por sexo.
+## Observações importantes
 
-| Cenário | Melhor acurácia do artigo | Melhor acurácia do projeto | Houve melhoria em acurácia? |
-|---|---:|---:|---|
-| Base completa | 75,3% | 68,4% | Não |
-| Homens | 76,5% | 75,0% | Não |
-| Mulheres | 71,4% | 59,5% | Não |
+- Os resultados podem variar ligeiramente conforme a versão do R, dos pacotes e do sistema operacional.
+- O script usa `set.seed(123)` para aumentar a reprodutibilidade.
+- A instalação de pacotes como `xgboost` pode demorar na primeira execução.
+- Caso algum modelo falhe por problema de instalação ou ambiente, o script registra a falha em arquivos de erro dentro de `resultados/` e continua executando os demais modelos.
 
-Mesmo sem superar o artigo em acurácia, a análise mostrou que escolher modelo apenas pela acurácia pode ser inadequado em uma base médica desbalanceada.
+## Objetivo acadêmico
 
----
-
-## Interpretação
-
-A principal interpretação é que o melhor modelo depende do cenário analisado.
-
-Na base completa, a Regressão Logística teve melhor equilíbrio pelo critério composto. Para homens e mulheres, o Random Forest teve melhor desempenho.
-
-O ponto mais importante é que a acurácia sozinha não foi suficiente. Em uma base médica, é necessário observar se o modelo consegue identificar corretamente tanto os pacientes doentes quanto os saudáveis.
-
----
-
-## Limitações
-
-As principais limitações foram:
-
-- a base é pequena;
-- as classes são desbalanceadas;
-- há menor quantidade de pacientes mulheres;
-- os resultados podem variar conforme a divisão treino/teste;
-- não houve validação externa;
-- o modelo não substitui diagnóstico médico.
-
----
-
-## Conclusão
-
-A análise mostrou que a base ILPD exige cuidado na escolha dos modelos e das métricas.
-
-O melhor resultado geral apareceu no cenário masculino com Random Forest. Na base completa, a Regressão Logística foi escolhida por apresentar melhor equilíbrio entre as métricas.
-
-Portanto, a principal conclusão é que, em bases médicas desbalanceadas, o melhor modelo não deve ser escolhido apenas pela acurácia. É necessário considerar sensibilidade, especificidade, F1-score e AUC para entender melhor o comportamento do modelo.
+Este projeto foi preparado para ser simples de executar, organizado e defensável em uma apresentação acadêmica. Ele valoriza a interpretação das métricas em um problema de saúde, especialmente porque falsos negativos e falsos positivos têm impactos diferentes na avaliação de pacientes com possível doença hepática.

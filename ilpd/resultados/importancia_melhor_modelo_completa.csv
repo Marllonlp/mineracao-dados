@@ -1,0 +1,11 @@
+Variavel,Overall,Cenario,Modelo
+Alamine_Aminotransferase,100,Completa,Regressao Logistica
+Age,84.8261028876006,Completa,Regressao Logistica
+Total_Proteins,83.71041985019467,Completa,Regressao Logistica
+Albumin,77.43640518241975,Completa,Regressao Logistica
+Albumin_and_Globulin_Ratio,51.61537865765939,Completa,Regressao Logistica
+Aspartate_Aminotransferase,34.851695078874144,Completa,Regressao Logistica
+Direct_Bilirubin,34.323989843834084,Completa,Regressao Logistica
+Total_Bilirubin,16.925066050884727,Completa,Regressao Logistica
+Alkaline_Phosphatase,11.606382114114096,Completa,Regressao Logistica
+GenderMale,0,Completa,Regressao Logistica

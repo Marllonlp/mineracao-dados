@@ -1,0 +1,10 @@
+Variavel,Overall,Cenario,Modelo
+Age,100,Homens,Random Forest
+Direct_Bilirubin,84.26601642692142,Homens,Random Forest
+Total_Bilirubin,83.50458090239317,Homens,Random Forest
+Alamine_Aminotransferase,69.88202582313716,Homens,Random Forest
+Alkaline_Phosphatase,60.88997018435559,Homens,Random Forest
+Aspartate_Aminotransferase,44.31107134244607,Homens,Random Forest
+Albumin,29.57810253516075,Homens,Random Forest
+Albumin_and_Globulin_Ratio,21.954657899539267,Homens,Random Forest
+Total_Proteins,0,Homens,Random Forest

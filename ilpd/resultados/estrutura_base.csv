@@ -1,0 +1,12 @@
+Variavel,Classe_R,Valores_Ausentes,Valores_Distintos
+Age,integer,0,72
+Gender,factor,0,2
+Total_Bilirubin,numeric,0,113
+Direct_Bilirubin,numeric,0,80
+Alkaline_Phosphatase,integer,0,263
+Alamine_Aminotransferase,integer,0,152
+Aspartate_Aminotransferase,integer,0,177
+Total_Proteins,numeric,0,58
+Albumin,numeric,0,40
+Albumin_and_Globulin_Ratio,numeric,4,69
+Selector,factor,0,2

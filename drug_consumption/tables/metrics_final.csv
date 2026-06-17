@@ -1,0 +1,19 @@
+threshold,accuracy_pct,sensitivity_pct,specificity_pct,precision_pct,recall_pct,f1_pct,balanced_accuracy_pct,roc_auc_pct,pr_auc_pct,true_positive,true_negative,false_positive,false_negative,selection_floor_pct,drug,selected_model,selected_threshold,config_type
+0.7400000000000001,65.46,64.99,83.33,99.33,64.99,78.57,74.16,81.22,99.42,297,10,2,160,64.99,Alcohol,Ensemble: ranger__smote__num_trees=500_mtry=3_min_node_size=5 | glmnet__adasyn__alpha=1,0.7400000000000001,ensemble
+0.41,73.56,73.58,73.55,58.79,73.58,65.36,73.57,79.76,59.93,117,228,82,42,73.55,Amphet,Ensemble: ranger__none__num_trees=500_mtry=3_min_node_size=5 | glmnet__none__alpha=0 | c50__none__trials=10,0.41,ensemble
+0.37,69.94,70.73,69.77,33.14,70.73,45.14,70.25,75.76,39.75,58,270,117,24,69.77,Amyl,Ensemble: ranger__smote__num_trees=500_mtry=3_min_node_size=5 | glmnet__weights__alpha=1 | c50__smote__trials=20,0.37,ensemble
+0.41,70.36,68.85,71.33,60.58,68.85,64.45,70.09,76.8,67.3,126,204,82,57,68.85,Benzos,glmnet__none__alpha=0,0.41,single_model
+0.93,77.83,78.77,41.67,98.09,78.77,87.38,60.22,72.57,99.07,360,5,7,97,41.67,Caff,ranger__smote__num_trees=500_mtry=3_min_node_size=5,0.93,single_model
+0.44,79.53,76.6,85.35,91.22,76.6,83.28,80.98,87.81,93.1,239,134,23,73,76.6,Cannabis,glmnet__weights__alpha=0.5,0.44,single_model
+0.8200000000000001,61.41,61.3,66.67,98.95,61.3,75.7,63.99,70.51,98.95,282,6,3,178,61.3,Choc,Ensemble: ranger__smote__num_trees=500_mtry=3_min_node_size=5 | glmnet__adasyn__alpha=1 | c50__adasyn__trials=20,0.8200000000000001,ensemble
+0.43,71.64,68.12,73.46,57.07,68.12,62.11,70.79,75.57,55.71,109,227,82,51,68.12,Coke,ranger__none__num_trees=500_mtry=3_min_node_size=5,0.43,single_model
+0.32,67.16,56.82,68.24,15.62,56.82,24.51,62.53,72.58,22.33,25,290,135,19,56.82,Crack,Ensemble: ranger__weights__num_trees=500_mtry=5_min_node_size=5 | glmnet__smote__alpha=1,0.32,ensemble
+0.49,76.33,78.61,75,64.76,78.61,71.02,76.81,82.35,67.13,136,222,74,37,75,Ecstasy,Ensemble: ranger__none__num_trees=500_mtry=3_min_node_size=5 | glmnet__weights__alpha=1,0.49,ensemble
+0.56,72.49,70.73,72.66,19.86,70.73,31.02,71.7,78.71,23.72,29,311,117,12,70.73,Heroin,glmnet__adasyn__alpha=1,0.56,single_model
+0.39,69.08,76.39,67.76,30.05,76.39,43.14,72.07,78.45,33.85,55,269,128,17,67.76,Ketamine,Ensemble: ranger__smote__num_trees=500_mtry=3_min_node_size=5 | glmnet__smote__alpha=1 | c50__smote__trials=20,0.39,ensemble
+0.47,80.81,82.78,79.58,71.63,82.78,76.8,81.18,88.09,81.21,149,230,59,31,79.58,Legalh,Ensemble: ranger__none__num_trees=500_mtry=3_min_node_size=5 | glmnet__weights__alpha=0.5,0.47,ensemble
+0.36,78.04,85.95,75.29,54.74,85.95,66.88,80.62,84.03,56.04,104,262,86,17,75.29,LSD,ranger__none__num_trees=500_mtry=3_min_node_size=5,0.36,single_model
+0.44,74.84,70.54,76.19,48.17,70.54,57.25,73.36,81.9,54.81,79,272,85,33,70.54,Meth,Ensemble: ranger__smote__num_trees=500_mtry=3_min_node_size=5 | glmnet__smote__alpha=1,0.44,ensemble
+0.48,78.04,79.62,77.24,63.78,79.62,70.82,78.43,82.3,64.11,125,241,71,32,77.24,Mushrooms,Ensemble: ranger__none__num_trees=500_mtry=3_min_node_size=5 | glmnet__weights__alpha=0.5,0.48,ensemble
+0.56,71.22,68.54,77.03,86.61,68.54,76.52,72.78,78.16,87.73,220,114,34,101,68.54,Nicotine,Ensemble: ranger__none__num_trees=500_mtry=3_min_node_size=5 | glmnet__weights__alpha=1,0.56,ensemble
+0.16,73.77,73.21,73.85,27.52,73.21,40,73.53,81.27,31.3,41,305,108,15,73.21,VSA,glmnet__none__alpha=0,0.16,single_model

@@ -1,0 +1,19 @@
+drug,article_method,accuracy_pct,sensitivity_pct,specificity_pct,f1_pct
+Alcohol,RF Padrão,96.58,100.00,0.00,98.26
+Amphet,RF Padrão,71.58,56.55,80.00,58.82
+Amyl,RF + SMOTE,81.45,32.61,93.37,40.82
+Benzos,RF Padrão,69.23,52.63,80.58,58.14
+Caff,RF Padrão,98.08,100.00,0.00,99.03
+Cannabis,RF Padrão,81.88,88.85,67.74,86.78
+Choc,RF Padrão,98.29,100.00,0.00,99.14
+Coke,RF Padrão,69.08,43.53,83.61,50.51
+Crack,RF + SMOTE,87.21,17.02,95.02,21.05
+Ecstasy,RF Padrão,74.84,67.74,79.51,68.11
+Heroin,RF + SMOTE,87.63,25.00,95.44,30.95
+Ketamine,RF + SMOTE,80.77,30.23,92.15,36.62
+Legalh,RF Padrão,81.24,72.49,87.14,75.69
+LSD,RF + SMOTE,81.20,69.34,86.10,68.35
+Meth,RF + SMOTE,77.14,45.63,86.03,46.77
+Mushrooms,RF Padrão,75.64,64.33,82.15,65.87
+Nicotine,RF Padrão,71.43,85.35,43.23,80.00
+VSA,RF + SMOTE,85.47,26.79,93.45,30.61

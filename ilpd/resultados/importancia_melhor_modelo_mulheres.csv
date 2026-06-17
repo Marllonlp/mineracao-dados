@@ -1,0 +1,10 @@
+Variavel,Overall,Cenario,Modelo
+Alkaline_Phosphatase,100,Mulheres,Random Forest
+Aspartate_Aminotransferase,79.13936234823751,Mulheres,Random Forest
+Alamine_Aminotransferase,76.49156762717129,Mulheres,Random Forest
+Total_Bilirubin,68.6005355426802,Mulheres,Random Forest
+Total_Proteins,34.03558548394685,Mulheres,Random Forest
+Albumin,31.76413637110862,Mulheres,Random Forest
+Direct_Bilirubin,20.569181035342982,Mulheres,Random Forest
+Age,10.872846434415049,Mulheres,Random Forest
+Albumin_and_Globulin_Ratio,0,Mulheres,Random Forest

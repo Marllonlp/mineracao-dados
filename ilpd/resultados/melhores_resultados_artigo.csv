@@ -1,0 +1,4 @@
+Cenario,Melhor_Artigo_Modelo,Melhor_Artigo_Acuracia
+Completa,Regressao Logistica sem CFS,0.753
+Homens,Generalized Linear Model sem CFS,0.765
+Mulheres,SVM sem CFS,0.714

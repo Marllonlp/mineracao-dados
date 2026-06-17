@@ -1,0 +1,5 @@
+source,mean_accuracy_pct,mean_sensitivity_pct,mean_specificity_pct,mean_f1_pct,mean_balanced_accuracy_pct,mean_roc_auc_pct,mean_pr_auc_pct
+Nossa análise,72.86,72.56,72.66,62.22,72.61,79.32,63.08
+Baseline RF,81.52,59.7,68.78,60.26,NA,NA,NA
+Artigo,81.6,59.89,69.2,61.97,NA,NA,NA
+Dados Brutos,82.61,54.48,70.86,56.14,NA,NA,NA

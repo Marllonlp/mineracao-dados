@@ -1,0 +1,320 @@
+---
+title: "Análise de Dados do Indian Liver Patient Dataset — ILPD"
+author: "Projeto de Mineração de Dados"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  pdf_document:
+    toc: true
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+options(stringsAsFactors = FALSE)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+instalar_e_carregar <- function(nome_do_pacote) {
+  if (!requireNamespace(nome_do_pacote, quietly = TRUE)) {
+    install.packages(nome_do_pacote, dependencies = TRUE)
+  }
+  suppressPackageStartupMessages(
+    library(nome_do_pacote, character.only = TRUE)
+  )
+}
+
+pacotes <- c("tidyverse", "knitr", "kableExtra", "rmarkdown", "scales")
+invisible(lapply(pacotes, instalar_e_carregar))
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  out.width = "90%"
+)
+
+if (!file.exists("resultados/tabela_comparativa_final.csv")) {
+  source("analise_ilpd.R")
+}
+
+ler_csv <- function(caminho) {
+  readr::read_csv(caminho, show_col_types = FALSE)
+}
+
+formatar_tabela <- function(tabela) {
+  names(tabela) <- gsub("_", " ", names(tabela))
+  tabela %>%
+    knitr::kable(booktabs = TRUE, digits = 4) %>%
+    kableExtra::kable_styling(latex_options = c("striped", "scale_down", "HOLD_position"), font_size = 8)
+}
+
+formatar_metricas <- function(tabela) {
+  tabela %>%
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::any_of(c("Acuracia", "Sensitividade", "Especificidade", "Precisao", "Recall", "F1", "AUC", "Score_Geral", "Melhor_Artigo_Acuracia", "Melhor_Projeto_Acuracia", "Melhor_Projeto_Sensitividade", "Melhor_Projeto_Especificidade", "Melhor_Projeto_F1", "Melhor_Projeto_AUC")),
+        ~ scales::percent(.x, accuracy = 0.1)
+      )
+    )
+}
+
+incluir_imagem <- function(caminho) {
+  if (file.exists(caminho)) {
+    knitr::include_graphics(caminho)
+  } else {
+    cat(paste("Arquivo não encontrado:", caminho))
+  }
+}
+
+metricas <- ler_csv("resultados/tabela_comparativa_final.csv")
+melhores <- ler_csv("resultados/melhores_modelos_por_cenario.csv")
+comparacao <- ler_csv("resultados/comparacao_com_artigo.csv")
+resumo_estatistico <- ler_csv("resultados/resumo_estatistico.csv")
+dimensao_base <- ler_csv("resultados/dimensao_base.csv")
+estrutura_base <- ler_csv("resultados/estrutura_base.csv")
+valores_ausentes <- ler_csv("resultados/valores_ausentes.csv")
+distribuicao_classes <- ler_csv("resultados/distribuicao_classes.csv")
+distribuicao_genero <- ler_csv("resultados/distribuicao_genero.csv")
+```
+
+# Introdução
+
+As doenças hepáticas representam um problema relevante de saúde pública, pois podem evoluir de forma silenciosa e gerar complicações graves quando não são identificadas precocemente. Nesse contexto, técnicas de ciência de dados, mineração de dados e aprendizado de máquina podem auxiliar a identificação de padrões clínicos relacionados à presença ou ausência de doença hepática.
+
+O objetivo desta análise é construir uma abordagem mais completa e competitiva para o **Indian Liver Patient Dataset — ILPD**, comparando diferentes modelos de classificação, tratando o desbalanceamento das classes e avaliando os resultados por meio de métricas além da acurácia.
+
+# Descrição da base de dados
+
+O ILPD contém registros de pacientes com variáveis demográficas e bioquímicas relacionadas à função hepática. A variável-alvo original, chamada `Selector`, assume valor `1` para pacientes com doença hepática e `2` para pacientes sem doença. Nesta análise, ela foi convertida para duas classes interpretáveis: **Doente** e **Saudavel**.
+
+```{r dimensao-base}
+formatar_tabela(dimensao_base)
+```
+
+As variáveis utilizadas na análise são apresentadas abaixo.
+
+```{r estrutura-base}
+formatar_tabela(estrutura_base)
+```
+
+A distribuição das classes mostra que a base é desbalanceada, com maior presença de pacientes doentes.
+
+```{r distribuicao-classes-tabela}
+formatar_tabela(distribuicao_classes)
+```
+
+```{r distribuicao-classes-grafico}
+incluir_imagem("graficos/distribuicao_classes.png")
+```
+
+Também há predominância de pacientes do sexo masculino.
+
+```{r distribuicao-genero-tabela}
+formatar_tabela(distribuicao_genero)
+```
+
+```{r distribuicao-genero-grafico}
+incluir_imagem("graficos/distribuicao_genero.png")
+```
+
+# Metodologia
+
+A metodologia foi organizada para reduzir vazamento de dados e permitir comparação justa entre os modelos. As principais etapas foram:
+
+1. carregamento do CSV localizado na pasta `dados/`;
+2. renomeação das colunas para nomes claros;
+3. conversão de `Gender` para fator;
+4. conversão de `Selector` para as classes `Doente` e `Saudavel`;
+5. verificação de valores ausentes, com atenção à variável `Albumin_and_Globulin_Ratio`;
+6. separação estratificada em treino e teste;
+7. validação cruzada estratificada com 10 folds no conjunto de treino;
+8. tratamento do desbalanceamento com **upsampling dentro da validação cruzada**;
+9. imputação por mediana, centralização, padronização e remoção de variáveis com variância zero dentro do fluxo de treino;
+10. avaliação final apenas no conjunto de teste.
+
+Foram testados os seguintes modelos:
+
+- Regressão Logística;
+- Random Forest;
+- SVM com kernel radial;
+- Naive Bayes;
+- XGBoost.
+
+As métricas principais foram **acurácia**, **sensitividade** e **especificidade**. Também foram calculadas **precisão**, **recall**, **F1-score** e **AUC**, quando disponíveis.
+
+A análise foi repetida em três cenários:
+
+- base completa;
+- apenas pacientes homens;
+- apenas pacientes mulheres.
+
+# Análise exploratória
+
+## Valores ausentes
+
+A tabela abaixo apresenta a quantidade e o percentual de valores ausentes por variável. Quando existem valores faltantes em variáveis numéricas, o script usa imputação por mediana dentro do fluxo de treinamento, evitando uso indevido de informação do conjunto de teste.
+
+```{r valores-ausentes}
+formatar_tabela(valores_ausentes)
+```
+
+## Estatísticas descritivas
+
+```{r resumo-estatistico}
+formatar_tabela(resumo_estatistico)
+```
+
+## Distribuição das variáveis numéricas
+
+```{r distribuicao-variaveis}
+incluir_imagem("graficos/distribuicao_variaveis_numericas.png")
+```
+
+## Correlação entre variáveis numéricas
+
+```{r correlacao}
+incluir_imagem("graficos/matriz_correlacao.png")
+```
+
+# Resultados dos modelos
+
+A tabela comparativa final reúne todos os cenários e modelos avaliados. O melhor modelo não deve ser escolhido apenas pela acurácia, pois a base é desbalanceada. Por isso, a análise considera conjuntamente acurácia, sensitividade, especificidade, F1-score e AUC.
+
+```{r tabela-comparativa-final}
+metricas %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+## Base completa
+
+```{r resultados-completa}
+metricas %>%
+  dplyr::filter(Cenario == "Completa") %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+```{r grafico-acuracia-completa}
+incluir_imagem("graficos/acuracia_modelos_completa.png")
+```
+
+```{r grafico-sens-esp-completa}
+incluir_imagem("graficos/sensitividade_especificidade_completa.png")
+```
+
+```{r roc-completa}
+incluir_imagem("graficos/curva_roc_melhores_modelos_completa.png")
+```
+
+```{r importancia-completa}
+incluir_imagem("graficos/importancia_variaveis_melhor_modelo_completa.png")
+```
+
+## Apenas pacientes homens
+
+```{r resultados-homens}
+metricas %>%
+  dplyr::filter(Cenario == "Homens") %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+```{r grafico-acuracia-homens}
+incluir_imagem("graficos/acuracia_modelos_homens.png")
+```
+
+```{r grafico-sens-esp-homens}
+incluir_imagem("graficos/sensitividade_especificidade_homens.png")
+```
+
+```{r roc-homens}
+incluir_imagem("graficos/curva_roc_melhores_modelos_homens.png")
+```
+
+```{r importancia-homens}
+incluir_imagem("graficos/importancia_variaveis_melhor_modelo_homens.png")
+```
+
+## Apenas pacientes mulheres
+
+```{r resultados-mulheres}
+metricas %>%
+  dplyr::filter(Cenario == "Mulheres") %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+```{r grafico-acuracia-mulheres}
+incluir_imagem("graficos/acuracia_modelos_mulheres.png")
+```
+
+```{r grafico-sens-esp-mulheres}
+incluir_imagem("graficos/sensitividade_especificidade_mulheres.png")
+```
+
+```{r roc-mulheres}
+incluir_imagem("graficos/curva_roc_melhores_modelos_mulheres.png")
+```
+
+```{r importancia-mulheres}
+incluir_imagem("graficos/importancia_variaveis_melhor_modelo_mulheres.png")
+```
+
+# Comparação com o artigo
+
+O artigo de referência testou modelos como ANN, Gaussian Naive Bayes, Generalized Linear Model, Regressão Logística, Random Forest, SVM e SVM com pesos de classe, com e sem seleção de atributos CFS. As acurácias aproximadas ficaram em torno de 71% a 76%, variando conforme o cenário.
+
+A comparação abaixo usa os melhores resultados aproximados apresentados no artigo para cada cenário e os compara com os melhores modelos calculados por este projeto.
+
+```{r comparacao-artigo}
+comparacao %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+```{r grafico-comparacao-artigo}
+incluir_imagem("graficos/comparacao_acuracia_artigo.png")
+```
+
+# Melhor modelo
+
+A escolha do melhor modelo foi feita pelo `Score_Geral`, calculado a partir de acurácia, sensitividade, especificidade, F1-score e AUC. Essa escolha é mais adequada do que usar apenas acurácia, pois o problema envolve classes desbalanceadas e exige atenção tanto aos pacientes doentes quanto aos saudáveis.
+
+```{r melhores-modelos-tabela}
+melhores %>%
+  formatar_metricas() %>%
+  formatar_tabela()
+```
+
+```{r melhores-modelos-texto, results='asis'}
+for (i in seq_len(nrow(melhores))) {
+  cat(paste0(
+    "- No cenário **", melhores$Cenario[i], "**, o melhor modelo pelo critério composto foi **",
+    melhores$Modelo[i], "**, com acurácia de ", scales::percent(melhores$Acuracia[i], accuracy = 0.1),
+    ", sensitividade de ", scales::percent(melhores$Sensitividade[i], accuracy = 0.1),
+    ", especificidade de ", scales::percent(melhores$Especificidade[i], accuracy = 0.1),
+    ", F1 de ", scales::percent(melhores$F1[i], accuracy = 0.1),
+    " e AUC de ", scales::percent(melhores$AUC[i], accuracy = 0.1), ".\n"
+  ))
+}
+```
+
+# Discussão
+
+A análise realizada apresenta vantagens importantes em relação a uma avaliação baseada apenas em acurácia. Primeiro, a divisão treino/teste foi estratificada, preservando a proporção das classes. Segundo, a validação cruzada de 10 folds foi aplicada apenas no conjunto de treino. Terceiro, o balanceamento por upsampling foi feito dentro do processo de validação cruzada, o que reduz o risco de vazamento de dados.
+
+Outra vantagem é a comparação entre diferentes famílias de modelos: modelos lineares, métodos probabilísticos, máquinas de vetores de suporte, florestas aleatórias e gradient boosting. Essa diversidade aumenta a chance de encontrar uma solução robusta para padrões lineares e não lineares.
+
+Entre as limitações, deve-se destacar que o ILPD é uma base pequena e desbalanceada, especialmente no subconjunto feminino. Por isso, os resultados podem variar conforme a partição treino/teste, as versões dos pacotes e os hiperparâmetros avaliados. Além disso, mesmo modelos com boa acurácia podem ter desempenho insuficiente em sensitividade ou especificidade, o que justifica a avaliação por múltiplas métricas.
+
+# Conclusão
+
+Este projeto apresenta uma análise completa do ILPD, desde a exploração dos dados até a comparação de modelos supervisionados. A base foi analisada em três cenários, com tratamento de desbalanceamento, validação cruzada e avaliação por múltiplas métricas.
+
+A análise mostra que a escolha do melhor modelo depende do cenário e não deve ser feita apenas pela acurácia. Métricas como sensitividade, especificidade, F1-score e AUC fornecem uma visão mais completa do desempenho, especialmente porque a base é desbalanceada e envolve um problema de saúde.
+
+Os arquivos produzidos pelo script permitem reproduzir os resultados, consultar as tabelas finais e visualizar os gráficos principais, tornando a entrega transparente, organizada e adequada para uma apresentação acadêmica.
